@@ -1,0 +1,60 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+.streamlit/config.toml
+*.las
+*.sgy
+*.segy
+
+# --- React / Node ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vscode/
+.idea/
+
+# --- System ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Junk / Legacy (DO NOT PUSH) ---
+python_backend_legacy/
+productos_descargados/
+EN_PRODUCTOS_DATA/
+Rosen/
+*.exe
+*.spec
+*.db
+*.html
+!index.html
+!temp_map.html
+!temp_map_enhanced.html
+push_debug.txt
+push_error.txt
+push_ping.txt
+ping.txt
+vercel_trigger.txt
+build/
+dist/
+bin/
+obj/
+
+# --- Videos (Keeping only necessary ones) ---
+*.mp4
+!public/assets/hero_video.mp4
+!public/assets/side_viz.mp4
