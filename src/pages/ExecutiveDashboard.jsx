@@ -15,31 +15,40 @@ import {
     Wind
 } from 'lucide-react';
 
-const KPICard = ({ title, value, unit, trend, icon: Icon, color }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-3xl"
-    >
-        <div className="flex justify-between items-start mb-4">
-            <div className={`p-3 rounded-2xl bg-${color}/10 text-${color}`}>
-                <Icon size={24} />
+const KPICard = ({ title, value, unit, trend, icon: Icon, color }) => {
+    const colorMap = {
+        'cyan-400': 'text-[#22d3ee] bg-[#22d3ee]/10',
+        'orange-400': 'text-[#fb923c] bg-[#fb923c]/10',
+        'green-400': 'text-[#4ade80] bg-[#4ade80]/10',
+        'purple-400': 'text-[#c084fc] bg-[#c084fc]/10'
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-3xl"
+        >
+            <div className="flex justify-between items-start mb-4">
+                <div className={`p-3 rounded-2xl ${colorMap[color] || 'bg-white/10'}`}>
+                    <Icon size={24} />
+                </div>
+                {trend && (
+                    <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${trend > 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                        {trend > 0 ? '+' : ''}{trend}%
+                    </span>
+                )}
             </div>
-            {trend && (
-                <span className={`text-[10px] font-bold px-2 py-1 rounded-full ${trend > 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                    {trend > 0 ? '+' : ''}{trend}%
-                </span>
-            )}
-        </div>
-        <div className="space-y-1">
-            <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">{title}</p>
-            <div className="flex items-baseline gap-1">
-                <h3 className="text-2xl font-black text-white">{value}</h3>
-                <span className="text-xs text-white/30 font-bold">{unit}</span>
+            <div className="space-y-1">
+                <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">{title}</p>
+                <div className="flex items-baseline gap-1">
+                    <h3 className="text-2xl font-black text-white">{value}</h3>
+                    <span className="text-xs text-white/30 font-bold">{unit}</span>
+                </div>
             </div>
-        </div>
-    </motion.div>
-);
+        </motion.div>
+    );
+};
 
 const GaugeIndicator = ({ label, value, color }) => (
     <div className="flex flex-col items-center gap-2">
