@@ -165,24 +165,6 @@ function App() {
                     style={{ display: 'none' }}
                 />
 
-                <motion.button
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    onClick={() => setView('landing')}
-                    style={{
-                        position: 'fixed', top: '14px', right: '20px', zIndex: 100,
-                        padding: '8px 18px', display: 'flex', alignItems: 'center', gap: '8px',
-                        background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(12px)',
-                        color: '#94a3b8', border: '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '12px', cursor: 'pointer', fontSize: '11px', fontWeight: 700,
-                        fontFamily: 'Inter, sans-serif', letterSpacing: '0.5px',
-                        transition: 'all 0.3s ease',
-                    }}
-                    whileHover={{ background: 'rgba(0,242,255,0.08)', color: '#00f2ff', borderColor: 'rgba(0,242,255,0.2)' }}
-                >
-                    <ArrowLeft size={14} />
-                    INICIO
-                </motion.button>
                 <ExecutiveDashboard
                     data={realData}
                     onUploadRequest={triggerFileInput}
@@ -190,6 +172,7 @@ function App() {
                     onLoadHistory={loadHistoryFile}
                     isUploading={isUploading}
                     uploadProgress={uploadProgress}
+                    onExit={() => setView('landing')}
                 />
             </div>
         );
