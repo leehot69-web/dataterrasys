@@ -292,3 +292,35 @@ body {
     display: flex;
     animation: marquee 20s linear infinite;
 }
+
+/* ====== REVEAL CARD 3D PERSPECTIVE EFFECT ====== */
+.reveal-card-wrapper {
+    cursor: pointer;
+}
+
+.reveal-card-wrapper .reveal-bg {
+    opacity: 0 !important;
+    transition: opacity 0.5s cubic-bezier(.4, 0, .2, 1) !important;
+}
+
+.reveal-card-wrapper .reveal-fg {
+    transition: opacity 0.5s cubic-bezier(.4, 0, .2, 1), transform 0.5s cubic-bezier(.4, 0, .2, 1) !important;
+}
+
+.reveal-card-wrapper:hover .reveal-bg {
+    opacity: 1 !important;
+}
+
+.reveal-card-wrapper:hover .reveal-fg {
+    opacity: 0 !important;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+/* Mobile: same fade effect */
+@media (max-width: 768px) {
+    .reveal-card-wrapper:hover .reveal-fg {
+        opacity: 0 !important;
+        transform: scale(0.97);
+    }
+}
