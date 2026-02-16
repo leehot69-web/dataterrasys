@@ -61,7 +61,8 @@ const NodalAnalysisModal = ({ isOpen, onClose, wellData, kpis }) => {
 
             console.log("Simulando producción...", payload);
 
-            const response = await fetch('http://localhost:8000/analyze_nodal', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${apiUrl}/analyze_nodal`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

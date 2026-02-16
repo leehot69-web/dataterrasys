@@ -82,7 +82,8 @@ function App() {
         window.addEventListener('scroll', handleScroll);
 
         // Cargar historial
-        fetch('http://localhost:8000/history')
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        fetch(`${apiUrl}/history`)
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) setHistoryFiles(data);
@@ -96,7 +97,8 @@ function App() {
         setIsUploading(true);
         setUploadProgress('Recuperando sesión...');
         try {
-            const res = await fetch(`http://localhost:8000/load_history/${filename}`);
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const res = await fetch(`${apiUrl}/load_history/${filename}`);
             if (!res.ok) throw new Error("No se pudo cargar el archivo");
             const data = await res.json();
             setRealData(data);
@@ -121,7 +123,8 @@ function App() {
 
         try {
             setUploadProgress('Procesando petrofísica con Python...');
-            const response = await fetch('http://localhost:8000/upload', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${apiUrl}/upload`, {
                 method: 'POST',
                 body: formData,
             });
