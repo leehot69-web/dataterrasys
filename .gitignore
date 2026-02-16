@@ -58,3 +58,5 @@ obj/
 *.mp4
 !public/assets/hero_video.mp4
 !public/assets/side_viz.mp4
+
+geomind_saas/research_lab/
