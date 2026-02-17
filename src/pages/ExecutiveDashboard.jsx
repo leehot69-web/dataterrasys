@@ -1228,15 +1228,24 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
                 }
             `}</style>
             {isMobile && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Hexagon size={24} color="#00f2ff" /><span style={{ fontWeight: 900, fontSize: '14px' }}>DATA<span style={{ color: '#00f2ff' }}>TERRA</span></span></div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                        {/* Mobile Upload Button - Always visible */}
-                        <button onClick={onUploadRequest} style={{ background: 'rgba(0,242,255,0.1)', border: '1px solid rgba(0,242,255,0.2)', borderRadius: '8px', padding: '6px 10px', color: '#00f2ff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <Download size={14} style={{ transform: 'rotate(180deg)' }} /> <span style={{ fontSize: '10px', fontWeight: 800 }}>LOAD LAS</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+
+                    {/* Botón Volver (Izquierda) */}
+                    <button onClick={onExit} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '8px', color: '#888', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <ArrowLeft size={18} />
+                    </button>
+
+                    {/* Logo (Centro) */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Hexagon size={24} color="#00f2ff" /><span style={{ fontWeight: 900, fontSize: '16px' }}>DATA<span style={{ color: '#00f2ff' }}>TERRA</span></span></div>
+
+                    {/* Menú y Cargar (Derecha) */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <button onClick={onUploadRequest} style={{ background: 'rgba(0,242,255,0.1)', border: '1px solid rgba(0,242,255,0.2)', borderRadius: '8px', padding: '8px', color: '#00f2ff' }}>
+                            <Download size={18} style={{ transform: 'rotate(180deg)' }} />
                         </button>
-                        <button onClick={() => setSidebarOpen(true)} style={{ background: 'transparent', border: 'none', color: 'white' }}><Menu size={28} /></button>
+                        <button onClick={() => setSidebarOpen(true)} style={{ background: 'transparent', border: 'none', color: 'white' }}><Menu size={24} /></button>
                     </div>
+
                 </div>
             )}
             <AnimatePresence>
