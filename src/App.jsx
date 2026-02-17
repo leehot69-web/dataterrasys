@@ -140,7 +140,7 @@ function App() {
             setTimeout(() => setView('dashboard'), 300);
         } catch (error) {
             console.error('Upload failed:', error);
-            alert('Error: ' + error.message + '\n\nVerifica que el backend Python esté corriendo en localhost:8000');
+            alert(`Error al procesar archivo: ${error.message}\n\nSi el problema persiste, el servidor backend podría estar reiniciándose (Cold Start). Espera 1 minuto y reintenta.`);
         } finally {
             setIsUploading(false);
             setUploadProgress('');

@@ -105,6 +105,29 @@ def safe_list(series):
     arr = np.where(np.isfinite(arr), arr, 0)
     return arr.tolist()
 
+def sanitize_floats(obj):
+    """
+    Recursivamente reemplaza NaN/Inf con 0 (cero).
+    Esto evita que el frontend React crashee al intentar hacer .toFixed() en null.
+    """
+    if isinstance(obj, float):
+        if np.isnan(obj) or np.isinf(obj):
+            return 0.0
+        return obj
+    elif isinstance(obj, dict):
+        return {k: sanitize_floats(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [sanitize_floats(v) for v in obj]
+    elif isinstance(obj, np.generic):
+        # Manejar escalares de numpy (np.float64, etc)
+        if np.issubdtype(type(obj), np.floating):
+            if np.isnan(obj) or np.isinf(obj):
+                return 0.0
+            return float(obj)
+        elif np.issubdtype(type(obj), np.integer):
+            return int(obj)
+    return obj
+
 
 @app.post("/upload")
 async def upload_las(file: UploadFile = File(...)):
@@ -688,7 +711,8 @@ async def upload_las(file: UploadFile = File(...)):
         except Exception as ex:
             print(f"Error guardando historial: {ex}")
 
-        return response
+        # Sanitizar respuesta para evitar NaN que rompen el frontend
+        return sanitize_floats(response)
         
     except Exception as e:
         import traceback
@@ -780,13 +804,13 @@ async def analyze_nodal_system(data: NodalInput):
             vlp={'rates': vlp_res['rates'], 'pressures': vlp_res['pressures']}
         )
         
-        return {
+        return sanitize_floats({
             "ipr": ipr_res,
             "vlp": vlp_res,
             "operating_point": op_point, # {q_op, pwf_op} o None
             "status": "flowing" if op_point else "dead",
             "message": "Pozo Fluyente Estable" if op_point else "Pozo Muerto - No hay intersección (Pwf < VLP min)"
-        }
+        })
 
     except Exception as e:
         import traceback
