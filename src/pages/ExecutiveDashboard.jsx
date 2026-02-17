@@ -4,7 +4,7 @@ import {
     Database, Layers, BarChart3, Binary, LayoutGrid, Target, Waves,
     Thermometer, Globe, Box, AlertTriangle, FileText, PieChart,
     Hexagon, Menu, X, Info, ChevronRight, Maximize2, Map as MapIcon,
-    Download, Share2
+    Download, Share2, ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -1165,10 +1165,7 @@ const UserGuideModal = ({ onClose }) => (
 // ======================================================================
 // MAIN DASHBOARD
 // ======================================================================
-// ======================================================================
-// MAIN DASHBOARD
-// ======================================================================
-const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory, isUploading, uploadProgress, onExit }) => {
+const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory, isUploading, uploadProgress }) => {
     const [activeTab, setActiveTab] = useState('executive');
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [activeModal, setActiveModal] = useState(null);
@@ -1201,7 +1198,7 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
 
                         {/* Texto de Carga */}
                         <p style={{ color: '#ccc', fontSize: '12px', letterSpacing: '2px', fontWeight: 600, textTransform: 'uppercase', marginBottom: '15px' }}>
-                            {uploadProgress ? uploadProgress : 'INICIANDO...'}
+                            {uploadProgress || 'INICIANDO...'}
                         </p>
 
                         {/* Barra de Progreso */}
@@ -1209,9 +1206,9 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
                             <div style={{
                                 height: '100%',
                                 background: '#00f2ff',
-                                width: (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Leyendo')) ? '30%' :
-                                    (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Procesando')) ? '65%' :
-                                        (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Renderizando')) ? '90%' : '10%',
+                                width: uploadProgress?.includes('Leyendo') ? '30%' :
+                                    uploadProgress?.includes('Procesando') ? '65%' :
+                                        uploadProgress?.includes('Renderizando') ? '90%' : '10%',
                                 transition: 'width 0.5s ease',
                                 boxShadow: '0 0 10px rgba(0, 242, 255, 0.5)'
                             }}></div>
@@ -1229,23 +1226,8 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
             `}</style>
             {isMobile && (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-
-                    {/* Botón Volver (Izquierda) */}
-                    <button onClick={onExit} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '8px', color: '#888', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <ArrowLeft size={18} />
-                    </button>
-
-                    {/* Logo (Centro) */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Hexagon size={24} color="#00f2ff" /><span style={{ fontWeight: 900, fontSize: '16px' }}>DATA<span style={{ color: '#00f2ff' }}>TERRA</span></span></div>
-
-                    {/* Menú y Cargar (Derecha) */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <button onClick={onUploadRequest} style={{ background: 'rgba(0,242,255,0.1)', border: '1px solid rgba(0,242,255,0.2)', borderRadius: '8px', padding: '8px', color: '#00f2ff' }}>
-                            <Download size={18} style={{ transform: 'rotate(180deg)' }} />
-                        </button>
-                        <button onClick={() => setSidebarOpen(true)} style={{ background: 'transparent', border: 'none', color: 'white' }}><Menu size={24} /></button>
-                    </div>
-
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Hexagon size={28} color="#00f2ff" /><span style={{ fontWeight: 900, fontSize: '16px' }}>DATA<span style={{ color: '#00f2ff' }}>TERRA</span></span></div>
+                    <button onClick={() => setSidebarOpen(true)} style={{ background: 'transparent', border: 'none', color: 'white' }}><Menu size={24} /></button>
                 </div>
             )}
             <AnimatePresence>
@@ -1327,25 +1309,13 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
             </AnimatePresence>
             <div style={{ flex: 1, paddingLeft: isMobile ? 0 : '30px', display: 'flex', flexDirection: 'column' }}>
                 <header style={{ marginBottom: '25px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                        <div>
-                            <p style={{ fontSize: '10px', color: '#00f2ff', fontWeight: 900, letterSpacing: '2px', margin: 0 }}>{activeTab.toUpperCase()} MODULE</p>
-                            <h1 style={{ fontSize: isMobile ? '1.6rem' : '2.2rem', fontWeight: 900, letterSpacing: '-2px', margin: '5px 0 0 0' }}>
-                                {activeTab === 'executive' && 'Executive Overview'}
-                                {activeTab === 'geology' && 'Subsurface Modeling'}
-                                {activeTab === 'petrophysics' && 'Well Log Analysis'}
-                                {activeTab === 'analytics' && 'Analytics & Data'}
-                            </h1>
-                        </div>
-                        {/* Botón Volver - Visible en Desktop y Mobile (en header) */}
-                        <button onClick={onExit} style={{
-                            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '12px', padding: '8px 14px', color: '#888', display: 'flex', alignItems: 'center', gap: '8px',
-                            cursor: 'pointer', fontSize: '10px', fontWeight: 700, height: 'fit-content'
-                        }}>
-                            <ArrowLeft size={14} /> VOLVER
-                        </button>
-                    </div>
+                    <p style={{ fontSize: '10px', color: '#00f2ff', fontWeight: 900, letterSpacing: '2px', margin: 0 }}>{activeTab.toUpperCase()} MODULE</p>
+                    <h1 style={{ fontSize: isMobile ? '1.6rem' : '2.2rem', fontWeight: 900, letterSpacing: '-2px', margin: '5px 0 0 0' }}>
+                        {activeTab === 'executive' && 'Executive Overview'}
+                        {activeTab === 'geology' && 'Subsurface Modeling'}
+                        {activeTab === 'petrophysics' && 'Well Log Analysis'}
+                        {activeTab === 'analytics' && 'Analytics & Data'}
+                    </h1>
                 </header>
                 <main style={{ flex: 1, paddingBottom: isMobile ? '80px' : 0 }}>
                     <AnimatePresence mode="wait">
