@@ -1201,7 +1201,7 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
 
                         {/* Texto de Carga */}
                         <p style={{ color: '#ccc', fontSize: '12px', letterSpacing: '2px', fontWeight: 600, textTransform: 'uppercase', marginBottom: '15px' }}>
-                            {uploadProgress || 'INICIANDO...'}
+                            {uploadProgress ? uploadProgress : 'INICIANDO...'}
                         </p>
 
                         {/* Barra de Progreso */}
@@ -1209,9 +1209,9 @@ const ExecutiveDashboard = ({ data, onUploadRequest, historyFiles, onLoadHistory
                             <div style={{
                                 height: '100%',
                                 background: '#00f2ff',
-                                width: uploadProgress?.includes('Leyendo') ? '30%' :
-                                    uploadProgress?.includes('Procesando') ? '65%' :
-                                        uploadProgress?.includes('Renderizando') ? '90%' : '10%',
+                                width: (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Leyendo')) ? '30%' :
+                                    (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Procesando')) ? '65%' :
+                                        (uploadProgress && typeof uploadProgress === 'string' && uploadProgress.includes('Renderizando')) ? '90%' : '10%',
                                 transition: 'width 0.5s ease',
                                 boxShadow: '0 0 10px rgba(0, 242, 255, 0.5)'
                             }}></div>
