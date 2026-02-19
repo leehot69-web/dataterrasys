@@ -16,14 +16,18 @@ const MiniLogChart = () => (
     </svg>
 );
 
+const mini3DPoints = [
+    [22, 62, 2, '#00f2ff'], [30, 52, 2.4, '#fb923c'], [40, 45, 2.8, '#00f2ff'],
+    [50, 34, 2, '#fb923c'], [60, 25, 2.6, '#00f2ff'], [70, 38, 2.2, '#fb923c'],
+    [80, 29, 2.9, '#00f2ff'], [90, 21, 2.1, '#fb923c'], [96, 48, 2.4, '#00f2ff'],
+    [72, 56, 2.3, '#fb923c'], [56, 60, 2.1, '#00f2ff'], [36, 65, 2.0, '#fb923c']
+];
+
 const Mini3DChart = () => (
     <svg viewBox="0 0 120 80" style={{ width: '100%', height: '80px', opacity: 0.6 }}>
-        {[...Array(20)].map((_, i) => {
-            const x = 20 + Math.random() * 80;
-            const y = 10 + Math.random() * 60;
-            const r = 1.5 + Math.random() * 3;
-            return <circle key={i} cx={x} cy={y} r={r} fill={Math.random() > 0.5 ? '#00f2ff' : '#fb923c'} opacity={0.5 + Math.random() * 0.5} />;
-        })}
+        {mini3DPoints.map(([x, y, r, fill], i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill={fill} opacity={0.75} />
+        ))}
         <line x1="10" y1="75" x2="110" y2="75" stroke="#333" strokeWidth="0.5" />
         <line x1="10" y1="5" x2="10" y2="75" stroke="#333" strokeWidth="0.5" />
         <line x1="10" y1="75" x2="60" y2="45" stroke="#333" strokeWidth="0.5" />
