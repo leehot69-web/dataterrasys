@@ -258,9 +258,7 @@ export const SeismicSection = ({ data, onClose }) => {
         const nx = 50;
         const seismic_2d = [];
         for (let i = 0; i < nx; i++) {
-            // Añadir un poco de ruido aleatorio para realismo visual en trazas lejanas
-            const noise = i === nx / 2 ? 0 : (Math.random() - 0.5) * 0.1;
-            seismic_2d.push(res.seismic.map(s => s + noise));
+            seismic_2d.push([...res.seismic]);
         }
 
         return {
